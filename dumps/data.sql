@@ -1,0 +1,3 @@
+CREATE SCHEMA IF NOT EXISTS courses_db;
+
+CREATE SCHEMA IF NOT EXISTS courses_db_test;
