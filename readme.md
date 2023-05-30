@@ -22,19 +22,17 @@ mvn test
 mvn spring-boot:run
 ```
 
-### Routes
+### Endpoints
 
 - Find User By Id
   ```/GET /api/users/{id}```
 
-
 - Create User
   ```/POST /api/users```
-
-Expected Payload:
-```json
-  { 
-    "name": "John Doe",
-    "email": "johndoe@test.com"
-  }
-```
+  Expected Payload:
+  ```json
+    { 
+      "name": "John Doe",
+      "email": "johndoe@test.com"
+    }
+  ```
