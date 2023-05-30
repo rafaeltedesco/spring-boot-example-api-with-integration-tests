@@ -1,5 +1,7 @@
 package com.course.courseexample.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,5 +36,11 @@ public class UserController {
   public ResponseEntity<User> findById(@PathVariable Long id) {
     User user = this.userRepository.findById(id).orElseThrow();
     return ResponseEntity.ok().body(user);
+  }
+
+  @GetMapping
+  public ResponseEntity<List<User>> findAll() {
+    List<User> users = this.userRepository.findAll();
+    return ResponseEntity.status(HttpStatus.OK).body(users);
   }
 }
