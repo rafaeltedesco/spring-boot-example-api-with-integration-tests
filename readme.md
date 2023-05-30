@@ -29,6 +29,7 @@ mvn spring-boot:run
 
 - Create User
   ```/POST /api/users```
+  
   Expected Payload:
   ```json
     { 
