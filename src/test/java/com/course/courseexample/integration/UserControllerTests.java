@@ -1,6 +1,5 @@
 package com.course.courseexample.integration;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -8,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +21,6 @@ import org.springframework.http.ResponseEntity;
 
 import com.course.courseexample.entities.User;
 import com.course.courseexample.repositories.UserRepository;
-import com.mysql.cj.protocol.x.Ok;
 
 @SpringBootTest(webEnvironment=WebEnvironment.RANDOM_PORT)
 public class UserControllerTests {
@@ -38,7 +35,7 @@ public class UserControllerTests {
   private UserRepository userRepository;
   
   private String getBaseUrl() {
-    return "http://localhost:" + port;
+    return "http://localhost:" + port + "/api/users";
   }
 
   private List<User> users = new ArrayList<>(Arrays.asList(
@@ -55,7 +52,7 @@ public class UserControllerTests {
 	@Test
 	void testCreateUser() {
 		User user = new User("Rafael Tedesco", "tedesco.teste@teste.com");
-		ResponseEntity<User> response = restTemplate.postForEntity(getBaseUrl() + "/api/users", user, User.class);
+		ResponseEntity<User> response = restTemplate.postForEntity(getBaseUrl(), user, User.class);
 		assertEquals(HttpStatus.CREATED, response.getStatusCode());
 		User createdUser = response.getBody();
 		
@@ -70,7 +67,7 @@ public class UserControllerTests {
   @Test
   void testGetUsers() {
     ResponseEntity<List<User>> response = restTemplate.exchange(
-      getBaseUrl() + "/api/users",HttpMethod.GET, null, 
+      getBaseUrl(), HttpMethod.GET, null, 
       new ParameterizedTypeReference<List<User>>() {});
   
     assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -82,10 +79,10 @@ public class UserControllerTests {
   @Test
   void testGetUserById() {
     User user = new User("Rafa Tedesco", "teste@rafatedesco.com");
-    ResponseEntity<User> response = restTemplate.postForEntity(getBaseUrl() + "/api/users", user, User.class);
+    ResponseEntity<User> response = restTemplate.postForEntity(getBaseUrl(), user, User.class);
     User createdUser = response.getBody();
 
-    ResponseEntity<User> getResponse = restTemplate.getForEntity(getBaseUrl() + "/api/users/" + createdUser.getId() , User.class);
+    ResponseEntity<User> getResponse = restTemplate.getForEntity(getBaseUrl() + "/" + createdUser.getId() , User.class);
 
     assertEquals(HttpStatus.OK, getResponse.getStatusCode());
 
